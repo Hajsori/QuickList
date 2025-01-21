@@ -3,7 +3,7 @@ package dev.dercoderjo.quicklist;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import dev.dercoderjo.quicklist.common.ToDoItem;
+import dev.dercoderjo.quicklist.common.ToDoIngredient;
 import dev.dercoderjo.quicklist.common.ToDoRecipe;
 import dev.dercoderjo.quicklist.event.KeyInputHandler;
 import dev.dercoderjo.quicklist.screen.QuickListScreen;
@@ -21,6 +21,7 @@ import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -160,29 +161,30 @@ public class QuickListClient implements ClientModInitializer {
 
                 if (!recipes.isEmpty()) {
                     int y = MinecraftClient.getInstance().getWindow().getScaledHeight();
-                    List<ToDoItem> items = new java.util.ArrayList<>(List.of());
+                    List<ToDoIngredient> ingredients = new java.util.ArrayList<>(List.of());
                     for (ToDoRecipe recipe : recipes) {
                         for (EmiIngredient ingredient : recipe.getRecipe().getInputs()) {
-                            for (EmiStack stack : ingredient.getEmiStacks()) {
-                                if (Objects.equals(stack.getId(), Identifier.of("emi", "empty"))) {
-                                    continue;
-                                }
+                            List<EmiStack> stacks = ingredient.getEmiStacks().stream().filter((stack) -> !Objects.equals(stack.getId(), Identifier.of("emi", "empty"))).toList();
+                            if (stacks.isEmpty()) {
+                                continue;
+                            }
 
-                                boolean found = false;
-                                for (ToDoItem item : items) {
-                                    if (item.getIdentifier() == stack.getId()) {
-                                        found = true;
+                            boolean found = false;
+                            for (ToDoIngredient toDoIngredient : ingredients) {
+                                if (toDoIngredient.getStacks().equals(stacks)) {
+                                    found = true;
 
-                                        item.addAmount(stack.getAmount());
-                                    }
+                                    toDoIngredient.addAmount(stacks.getFirst().getAmount());
                                 }
-                                if (!found) {
-                                    items.add(new ToDoItem(stack, recipe.getAmount()));
-                                    y -= (int) (10 * 0.75 + 26);
-                                }
+                            }
+
+                            if (!found) {
+                                ingredients.add(new ToDoIngredient(stacks, recipe.getAmount()));
+                                y -= (int) (10 * 0.75 + 26);
                             }
                         }
                     }
+
                     y += 4;
                     y /= 2;
 
@@ -201,13 +203,21 @@ public class QuickListClient implements ClientModInitializer {
                     }
                     context.drawHorizontalLine(x, x + 192, y, ColorHelper.Argb.getArgb(255, 255, 255));
                     y += 4;
-                    for (ToDoItem item : items) {
+
+                    for (ToDoIngredient ingredient : ingredients) {
+                        List<EmiStack> stacks = ingredient.getStacks();
+                        EmiStack item = stacks.get((int) Math.floor((double) System.currentTimeMillis() / 1000 % stacks.size()));
+
                         context.drawText(MinecraftClient.getInstance().textRenderer, item.getName(), x, y, ColorHelper.Argb.getArgb(255, 255, 255), false);
 
                         assert MinecraftClient.getInstance().player != null;
-                        int playerItemCount = MinecraftClient.getInstance().player.getInventory().count(item.getItemStack().getItem());
-                        String itemCount = playerItemCount + "/" + item.getAmount() * item.getCraftAmount();
-                        int lineWidth = (int) Math.min(173, 173 * ((double) playerItemCount / (item.getAmount() * item.getCraftAmount())));
+                        int playerItemCount = 0;
+                        PlayerInventory playerInventory = MinecraftClient.getInstance().player.getInventory();
+                        for (EmiStack stack : stacks) {
+                            playerItemCount += playerInventory.count(stack.getItemStack().getItem());
+                        }
+                        String itemCount = playerItemCount + "/" + ingredient.getAmount() * ingredient.getCraftAmount();
+                        int lineWidth = (int) Math.min(173, 173 * ((double) playerItemCount / (ingredient.getAmount() * ingredient.getCraftAmount())));
 
                         context.drawText(MinecraftClient.getInstance().textRenderer, itemCount, x + 173 - MinecraftClient.getInstance().textRenderer.getWidth(itemCount), y, ColorHelper.Argb.getArgb(255, 255, 255), false);
                         item.render(context, x + 176, y - 2, 1);
