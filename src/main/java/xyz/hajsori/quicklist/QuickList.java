@@ -1,4 +1,4 @@
-package dev.dercoderjo.quicklist;
+package xyz.hajsori.quicklist;
 
 import net.fabricmc.api.ModInitializer;
 

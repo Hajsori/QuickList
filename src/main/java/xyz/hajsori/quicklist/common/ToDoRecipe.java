@@ -1,4 +1,4 @@
-package dev.dercoderjo.quicklist.common;
+package xyz.hajsori.quicklist.common;
 
 import dev.emi.emi.api.recipe.EmiRecipe;
 import net.minecraft.util.Identifier;

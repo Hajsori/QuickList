@@ -1,6 +1,6 @@
-package dev.dercoderjo.quicklist;
+package xyz.hajsori.quicklist;
 
-import dev.dercoderjo.quicklist.decoration.ToDoButtons;
+import xyz.hajsori.quicklist.decoration.ToDoButtons;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 

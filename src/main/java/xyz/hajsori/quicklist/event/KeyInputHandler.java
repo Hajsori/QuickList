@@ -1,7 +1,7 @@
-package dev.dercoderjo.quicklist.event;
+package xyz.hajsori.quicklist.event;
 
-import dev.dercoderjo.quicklist.QuickListClient;
-import dev.dercoderjo.quicklist.screen.QuickListScreen;
+import xyz.hajsori.quicklist.QuickListClient;
+import xyz.hajsori.quicklist.screen.QuickListScreen;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;

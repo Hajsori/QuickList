@@ -1,4 +1,4 @@
-package dev.dercoderjo.quicklist.decoration;
+package xyz.hajsori.quicklist.decoration;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

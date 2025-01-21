@@ -1,6 +1,6 @@
-package dev.dercoderjo.quicklist.screen;
+package xyz.hajsori.quicklist.screen;
 
-import dev.dercoderjo.quicklist.QuickListClient;
+import xyz.hajsori.quicklist.QuickListClient;
 import dev.emi.emi.api.EmiApi;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.stack.EmiStack;

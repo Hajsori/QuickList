@@ -5,7 +5,7 @@
   "name": "QuickList",
   "description": "With §mQuickList§r you can search for any item in the Game by pressing [N] (by default)!",
   "authors": [
-    "DercoderJo"
+    "Hajsori"
   ],
   "contact": {
     "discord": "https://discord.gg/jz89NS6uhT"
@@ -15,14 +15,14 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "dev.dercoderjo.quicklist.QuickListClient"
+      "xyz.hajsori.quicklist.QuickListClient"
     ],
     "main": [
-      "dev.dercoderjo.quicklist.QuickList"
+      "xyz.hajsori.quicklist.QuickList"
     ],
 
     "emi": [
-      "dev.dercoderjo.quicklist.QuickListEmiPlugin"
+      "xyz.hajsori.quicklist.QuickListEmiPlugin"
     ]
   },
   "mixins": [

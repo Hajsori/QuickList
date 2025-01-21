@@ -1,12 +1,12 @@
-package dev.dercoderjo.quicklist;
+package xyz.hajsori.quicklist;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import dev.dercoderjo.quicklist.common.ToDoIngredient;
-import dev.dercoderjo.quicklist.common.ToDoRecipe;
-import dev.dercoderjo.quicklist.event.KeyInputHandler;
-import dev.dercoderjo.quicklist.screen.QuickListScreen;
+import xyz.hajsori.quicklist.common.ToDoIngredient;
+import xyz.hajsori.quicklist.common.ToDoRecipe;
+import xyz.hajsori.quicklist.event.KeyInputHandler;
+import xyz.hajsori.quicklist.screen.QuickListScreen;
 import dev.emi.emi.api.EmiApi;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
