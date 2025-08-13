@@ -1,3 +1,5 @@
+[![Chat with us on Discord](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/Hv6NdCC5nf) [![Available on Modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/quicklist/) [![Available on CurseForge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg)](https://curseforge.com/minecraft/mc-mods/quicklist/)
+
 With QuickList you can search for any item via EMI by simply pressing [N] AND you have a nice To-Do list :3
 
 ### Quicksearch + Calculator
