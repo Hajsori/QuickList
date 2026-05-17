@@ -66,21 +66,12 @@ minecraft {
 
 sourceSets.main.resources.srcDir "src/generated/resources"
 
-repositories {
-    maven {
-        name = "TerraformersMC"
-        url = "https://maven.terraformersmc.com/"
-    }
-}
-
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
     // Forge"s hack fix
     implementation("net.sf.jopt-simple:jopt-simple:5.0.4") { version { strictly "5.0.4" } }
-
-    implementation fg.deobf("dev.emi:emi-forge:${emi_version}")
 }
 
 publishing {
