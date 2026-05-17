@@ -1,6 +1,6 @@
 plugins {
-    id 'java-library'
-    id 'maven-publish'
+    id "java-library"
+    id "maven-publish"
 }
 
 base {
@@ -19,32 +19,32 @@ repositories {
     exclusiveContent {
         forRepository {
             maven {
-                name = 'Sponge'
-                url = 'https://repo.spongepowered.org/repository/maven-public'
+                name = "Sponge"
+                url = "https://repo.spongepowered.org/repository/maven-public"
             }
         }
-        filter { includeGroupAndSubgroups('org.spongepowered') }
+        filter { includeGroupAndSubgroups("org.spongepowered") }
     }
     exclusiveContent {
         forRepositories(maven {
-            name = 'ParchmentMC'
-            url = 'https://maven.parchmentmc.org/'
+            name = "ParchmentMC"
+            url = "https://maven.parchmentmc.org/"
         },
                 maven {
                     name = "NeoForge"
-                    url = 'https://maven.neoforged.net/releases'
+                    url = "https://maven.neoforged.net/releases"
                 })
-        filter { includeGroup('org.parchmentmc.data') }
+        filter { includeGroup("org.parchmentmc.data") }
     }
     maven {
-        name = 'BlameJared'
-        url = 'https://maven.blamejared.com'
+        name = "BlameJared"
+        url = "https://maven.blamejared.com"
     }
 }
 
 // Declare capabilities on the outgoing configurations.
 // Read more about capabilities here: https://docs.gradle.org/current/userguide/component_capabilities.html#sec:declaring-additional-capabilities-for-a-local-component
-['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements'].each { variant ->
+["apiElements", "runtimeElements", "sourcesElements", "javadocElements"].each { variant ->
     configurations."$variant".outgoing {
         capability("$group:${base.archivesName.get()}:$version")
         capability("$group:$mod_id-${project.name}-${minecraft_version}:$version")
@@ -56,47 +56,54 @@ repositories {
 }
 
 sourcesJar {
-    from(rootProject.file('LICENSE')) {
+    from(rootProject.file("LICENSE")) {
         rename { "${it}_${mod_name}" }
     }
 }
 
 jar {
-    from(rootProject.file('LICENSE')) {
+    from(rootProject.file("LICENSE")) {
         rename { "${it}_${mod_name}" }
     }
 
     manifest {
-        attributes(['Specification-Title'   : mod_name,
-                    'Specification-Vendor'  : mod_author,
-                    'Specification-Version' : project.jar.archiveVersion,
-                    'Implementation-Title'  : project.name,
-                    'Implementation-Version': project.jar.archiveVersion,
-                    'Implementation-Vendor' : mod_author,
-                    'Built-On-Minecraft'    : minecraft_version])
+        attributes([
+                "Specification-Title"   : mod_name,
+                "Specification-Vendor"  : mod_author,
+                "Specification-Version" : project.jar.archiveVersion,
+                "Implementation-Title"  : project.name,
+                "Implementation-Version": project.jar.archiveVersion,
+                "Implementation-Vendor" : mod_author,
+                "Built-On-Minecraft"    : minecraft_version
+        ])
     }
 }
 
 processResources {
-    var expandProps = ['version'                      : version,
-                       'group'                        : project.group, //Else we target the task's group.
-                       'minecraft_version'            : minecraft_version,
-                       'minecraft_version_range'      : minecraft_version_range,
-                       'fabric_version'               : fabric_version,
-                       'fabric_loader_version'        : fabric_loader_version,
-                       'mod_name'                     : mod_name,
-                       'mod_author'                   : mod_author,
-                       'mod_id'                       : mod_id,
-                       'license'                      : license,
-                       'description'                  : project.description,
-                       'neoforge_version'             : neoforge_version,
-                       'neoforge_loader_version_range': neoforge_loader_version_range,
-                       "forge_version"                : forge_version,
-                       "forge_loader_version_range"   : forge_loader_version_range,
-                       'credits'                      : credits,
-                       'java_version'                 : java_version]
+    var expandProps = [
+            "version"                      : version,
+            "group"                        : project.group,
+            "minecraft_version"            : minecraft_version,
+            "minecraft_version_range"      : minecraft_version_range,
+            "fabric_version"               : fabric_version,
+            "fabric_loader_version"        : fabric_loader_version,
+            "mod_name"                     : mod_name,
+            "mod_author"                   : mod_author,
+            "mod_id"                       : mod_id,
+            "license"                      : license,
+            "description"                  : project.description,
+            "neoforge_version"             : neoforge_version,
+            "neoforge_loader_version_range": neoforge_loader_version_range,
+            "forge_version"                : forge_version,
+            "forge_loader_version_range"   : forge_loader_version_range,
+            "credits"                      : credits,
+            "java_version"                 : java_version,
 
-    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
+            "emi_version"                  : emi_version,
+            "exp4j_version"                : exp4j_version
+    ]
+
+    filesMatching(["pack.mcmeta", "fabric.mod.json", "META-INF/mods.toml", "META-INF/neoforge.mods.toml"]) {
         expand expandProps
     }
     inputs.properties(expandProps)
@@ -104,14 +111,14 @@ processResources {
 
 publishing {
     publications {
-        register('mavenJava', MavenPublication) {
+        register("mavenJava", MavenPublication) {
             artifactId base.archivesName.get()
             from components.java
         }
     }
     repositories {
         maven {
-            url System.getenv('local_maven_url')
+            url System.getenv("local_maven_url")
         }
     }
 }
