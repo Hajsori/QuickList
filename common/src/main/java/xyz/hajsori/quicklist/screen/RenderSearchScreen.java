@@ -72,15 +72,19 @@ public class RenderSearchScreen {
 
     private @Nullable Number calculate(String input, Player player) {
         String math = input
-                .replace('x', (char) player.getX())
-                .replace('y', (char) player.getY())
-                .replace('z', (char) player.getZ());
+                .replace("x", String.valueOf(player.getX()))
+                .replace("y", String.valueOf(player.getY()))
+                .replace("z", String.valueOf(player.getZ()));
 
         try {
             Expression expr = new ExpressionBuilder(math).build();
             double result = expr.evaluate();
 
-            return result % 1 == 0 ? (int) result : result;
+            if (result % 1 == 0) {
+                return (int) result;
+            } else {
+                return result;
+            }
         } catch (Exception e) {
             return null;
         }
