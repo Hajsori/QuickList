@@ -36,8 +36,8 @@ public class RenderSearchScreen {
                 searchScreen.buttons.get(i).visible = false;
             }
 
-            if (input.contains("+") || input.contains("-") || input.contains("*") || input.contains("/") || input.contains("%")) {
-                @Nullable Number result = calculate(input, player);
+            if (input.contains("+") || input.contains("-") || input.contains("*") || input.contains("/") || input.contains("%") || input.replaceAll(" ", "").endsWith("=")) {
+                @Nullable Number result = calculate(input.replace("=", ""), player);
                 Button button = searchScreen.buttons.getFirst();
 
                 button.visible = true;
