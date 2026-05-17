@@ -9,6 +9,7 @@ import dev.emi.emi.api.recipe.EmiRecipeDecorator;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import xyz.hajsori.quicklist.Variables;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,30 +18,24 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class ToDoButtons implements EmiRecipeDecorator {
-    Gson gson = new Gson();
-
     @Override
     public void decorateRecipe(EmiRecipe emiRecipe, WidgetHolder widgetHolder) {
         if (emiRecipe.getId() != null) {
             int middleHeight = emiRecipe.getDisplayHeight() / 2;
             widgetHolder.addButton(-17, middleHeight - 13, 12, 12, 0, 0, ResourceLocation.fromNamespaceAndPath("quicklist", "textures/gui/buttons.png"), () -> true, (mouseX, mouseY, button) -> {
-                File todo = new File(Minecraft.getInstance().gameDirectory, "config/quicklist/todo.json");
-                File configDir = todo.getParentFile();
-                if (!configDir.exists()) {
-                    configDir.mkdirs();
-                }
+                File todo = new File(Minecraft.getInstance().gameDirectory, "quick_todo_list.json");
 
                 if (!todo.exists()) {
                     JsonObject jsonObject = new JsonObject();
                     try (FileWriter writer = new FileWriter(todo)) {
-                        gson.toJson(jsonObject, writer);
+                        Variables.gson.toJson(jsonObject, writer);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
                 try (FileReader reader = new FileReader(todo)) {
-                    JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+                    JsonObject jsonObject = Variables.gson.fromJson(reader, JsonObject.class);
                     String worldPath;
                     try {
                         worldPath = Objects.requireNonNull(Minecraft.getInstance().getLevelSource()).getName();
@@ -73,7 +68,8 @@ public class ToDoButtons implements EmiRecipeDecorator {
                     }
 
                     try (FileWriter writer = new FileWriter(todo)) {
-                        gson.toJson(jsonObject, writer);
+                        Variables.toDoRecipes = jsonObject;
+                        Variables.gson.toJson(jsonObject, writer);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -82,11 +78,10 @@ public class ToDoButtons implements EmiRecipeDecorator {
                 }
             });
             widgetHolder.addButton(-17, middleHeight + 1, 12, 12, 12, 0, ResourceLocation.fromNamespaceAndPath("quicklist", "textures/gui/buttons.png"), () -> {
-                File todo = new File(Minecraft.getInstance().gameDirectory, "config/quicklist/todo.json");
-                File configDir = todo.getParentFile();
-                if (configDir.exists() && todo.exists()) {
+                File todo = new File(Minecraft.getInstance().gameDirectory, "quick_todo_list.json");
+                if (todo.exists()) {
                     try (FileReader reader = new FileReader(todo)) {
-                        JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+                        JsonObject jsonObject = Variables.gson.fromJson(reader, JsonObject.class);
                         String worldPath;
                         try {
                             worldPath = Objects.requireNonNull(Minecraft.getInstance().getLevelSource()).getName();
@@ -109,7 +104,8 @@ public class ToDoButtons implements EmiRecipeDecorator {
                         }
 
                         try (FileWriter writer = new FileWriter(todo)) {
-                            gson.toJson(jsonObject, writer);
+                            Variables.toDoRecipes = jsonObject;
+                            Variables.gson.toJson(jsonObject, writer);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -120,11 +116,7 @@ public class ToDoButtons implements EmiRecipeDecorator {
 
                 return false;
             }, (mouseX, mouseY, button) -> {
-                File todo = new File(Minecraft.getInstance().gameDirectory, "config/quicklist/todo.json");
-                File configDir = todo.getParentFile();
-                if (!configDir.exists()) {
-                    configDir.mkdirs();
-                }
+                File todo = new File(Minecraft.getInstance().gameDirectory, "quick_todo_list.json");
 
                 if (!todo.exists()) {
                     JsonObject jsonObject = new JsonObject();
@@ -132,14 +124,14 @@ public class ToDoButtons implements EmiRecipeDecorator {
                     jsonObject.add("multiplayer", new JsonObject());
 
                     try (FileWriter writer = new FileWriter(todo)) {
-                        gson.toJson(jsonObject, writer);
+                        Variables.gson.toJson(jsonObject, writer);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
                 try (FileReader reader = new FileReader(todo)) {
-                    JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+                    JsonObject jsonObject = Variables.gson.fromJson(reader, JsonObject.class);
                     String worldPath;
                     try {
                         worldPath = Objects.requireNonNull(Minecraft.getInstance().getLevelSource()).getName();
@@ -167,7 +159,8 @@ public class ToDoButtons implements EmiRecipeDecorator {
                     }
 
                     try (FileWriter writer = new FileWriter(todo)) {
-                        gson.toJson(jsonObject, writer);
+                        Variables.toDoRecipes = jsonObject;
+                        Variables.gson.toJson(jsonObject, writer);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

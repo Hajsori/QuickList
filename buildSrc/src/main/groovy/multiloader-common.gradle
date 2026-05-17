@@ -4,7 +4,7 @@ plugins {
 }
 
 base {
-    archivesName = "${mod_id}-${project.name}-${minecraft_version}"
+    archivesName = "${mod_id}-${project.name}"
 }
 
 java {
@@ -47,7 +47,7 @@ repositories {
 ["apiElements", "runtimeElements", "sourcesElements", "javadocElements"].each { variant ->
     configurations."$variant".outgoing {
         capability("$group:${base.archivesName.get()}:$version")
-        capability("$group:$mod_id-${project.name}-${minecraft_version}:$version")
+        capability("$group:$mod_id-${project.name}:$version")
         capability("$group:$mod_id:$version")
     }
     publishing.publications.configureEach {
@@ -83,8 +83,8 @@ processResources {
     var expandProps = [
             "version"                      : version,
             "group"                        : project.group,
-            "minecraft_version"            : minecraft_version,
-            "minecraft_version_range"      : minecraft_version_range,
+            "min_minecraft_version"        : min_minecraft_version,
+            "excluded_minecraft_version"   : excluded_minecraft_version,
             "fabric_version"               : fabric_version,
             "fabric_loader_version"        : fabric_loader_version,
             "mod_name"                     : mod_name,
@@ -103,7 +103,7 @@ processResources {
             "exp4j_version"                : exp4j_version
     ]
 
-    filesMatching(["pack.mcmeta", "fabric.mod.json", "META-INF/mods.toml", "META-INF/neoforge.mods.toml"]) {
+    filesMatching(["pack.mcmeta", "fabric.mod.json", "META-INF/neoforge.mods.toml"]) {
         expand expandProps
     }
     inputs.properties(expandProps)
