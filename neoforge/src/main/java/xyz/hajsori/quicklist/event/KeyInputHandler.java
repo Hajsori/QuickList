@@ -7,6 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import org.lwjgl.glfw.GLFW;
+import xyz.hajsori.quicklist.screen.RenderSearchScreen;
 import xyz.hajsori.quicklist.screen.SearchScreen;
 
 public class KeyInputHandler {
@@ -29,5 +30,7 @@ public class KeyInputHandler {
         if (openGuiKey.consumeClick()) {
             Minecraft.getInstance().setScreen(new SearchScreen());
         }
+
+        new RenderSearchScreen();
     }
 }
