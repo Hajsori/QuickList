@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
-import xyz.hajsori.quicklist.screen.QuickListScreen;
+import xyz.hajsori.quicklist.screen.SearchScreen;
 
 public class KeyInputHandler {
     public static final String KEY_CATEGORY_QUICKLIST = "key.category.quicklist.quicklist";
@@ -17,7 +17,7 @@ public class KeyInputHandler {
     public static void registerKeyInputs() {
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {
             if (openGuiKey.consumeClick()) {
-                Minecraft.getInstance().setScreen(new QuickListScreen());
+                Minecraft.getInstance().setScreen(new SearchScreen());
             }
         });
     }

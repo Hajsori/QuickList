@@ -4,7 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import xyz.hajsori.quicklist.event.KeyInputHandler;
-import xyz.hajsori.quicklist.screen.RenderQuickListScreen;
+import xyz.hajsori.quicklist.screen.RenderSearchScreen;
 import xyz.hajsori.quicklist.screen.RenderToDoList;
 
 public class QuickListClient implements ClientModInitializer {
@@ -14,7 +14,7 @@ public class QuickListClient implements ClientModInitializer {
 
 
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {
-            new RenderQuickListScreen();
+            new RenderSearchScreen();
         });
 
         HudRenderCallback.EVENT.register(RenderToDoList::new);

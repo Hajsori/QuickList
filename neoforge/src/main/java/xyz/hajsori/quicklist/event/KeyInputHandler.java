@@ -7,7 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import org.lwjgl.glfw.GLFW;
-import xyz.hajsori.quicklist.screen.QuickListScreen;
+import xyz.hajsori.quicklist.screen.SearchScreen;
 
 public class KeyInputHandler {
     public static final String KEY_CATEGORY_QUICKLIST = "key.category.quicklist.quicklist";
@@ -27,7 +27,7 @@ public class KeyInputHandler {
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         if (openGuiKey.consumeClick()) {
-            Minecraft.getInstance().setScreen(new QuickListScreen());
+            Minecraft.getInstance().setScreen(new SearchScreen());
         }
     }
 }

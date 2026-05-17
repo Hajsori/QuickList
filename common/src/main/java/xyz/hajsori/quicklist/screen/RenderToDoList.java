@@ -106,7 +106,7 @@ public class RenderToDoList {
                     context.drawString(Minecraft.getInstance().font, itemCount, x + 192 - Minecraft.getInstance().font.width(itemCount), y, 0xFFFFFFFF, false);
                     y += 10;
                 }
-                context.fill(x, y, x + 192, y + 1, 0xFF000000);
+                context.fill(x, y, x + 192, y + 1, 0xFFFFFFFF);
                 y += 4;
 
                 for (ToDoIngredient ingredient : ingredients) {

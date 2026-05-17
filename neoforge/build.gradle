@@ -36,4 +36,21 @@ neoForge {
     }
 }
 
+repositories {
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
+}
+
+dependencies {
+    // exp4j
+    implementation "net.objecthunter:exp4j:${exp4j_version}"
+    //include "net.objecthunter:exp4j:${exp4j_version}"
+
+    // EMI
+    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+    compileOnly "dev.emi:emi-neoforge:${emi_version}"
+}
+
 sourceSets.main.resources { srcDir 'src/generated/resources' }

@@ -79,6 +79,8 @@ dependencies {
 
     // Forge"s hack fix
     implementation("net.sf.jopt-simple:jopt-simple:5.0.4") { version { strictly "5.0.4" } }
+
+    implementation fg.deobf("dev.emi:emi-forge:${emi_version}")
 }
 
 publishing {

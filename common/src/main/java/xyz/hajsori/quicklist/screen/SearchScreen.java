@@ -6,7 +6,7 @@ import dev.emi.emi.api.stack.EmiStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.StringWidget;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
@@ -15,25 +15,25 @@ import xyz.hajsori.quicklist.Variables;
 import java.util.Arrays;
 import java.util.List;
 
-public class QuickListScreen extends Screen {
-    public QuickListScreen() {
+public class SearchScreen extends Screen {
+    public SearchScreen() {
         super(Component.translatable("screen.quicklist.gui"));
     }
 
 
-    public StringWidget searchField;
+    public EditBox searchFieldWidget;
     public List<EmiStack> icons = Arrays.asList(new EmiStack[5]);
     public List<Button> buttons = Arrays.asList(new Button[5]);
 
     @Override
     protected void init() {
-        searchField = new StringWidget(width / 2 - 128, height / 2 - 12, 256, 24, Component.empty(), this.font);
+        searchFieldWidget = new EditBox(this.font, width / 2 - 128, height / 2 - 12, 256, 24, Component.empty());
 
-        searchField.setMessage(Component.literal(Variables.oldInput));
+        searchFieldWidget.setValue(Variables.oldInput);
         Variables.oldInput = "";
-        searchField.setFocused(true);
-        this.addRenderableWidget(searchField);
-        this.setFocused(searchField);
+        searchFieldWidget.setFocused(true);
+        this.addRenderableWidget(searchFieldWidget);
+        this.setFocused(searchFieldWidget);
 
         int buttonY = height / 2 - 12;
         for (int i = 0; i < 5; i++) {
@@ -47,6 +47,7 @@ public class QuickListScreen extends Screen {
 
                         if (icon != null) {
                             List<EmiRecipe> recipes = EmiApi.getRecipeManager().getRecipesByOutput(icon);
+
                             if (!recipes.isEmpty()) {
                                 EmiApi.displayRecipe(recipes.getFirst());
                             }
@@ -68,7 +69,6 @@ public class QuickListScreen extends Screen {
     @Override
     public void render(@NotNull GuiGraphics context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        searchField.render(context, mouseX, mouseY, delta);
 
         int buttonY = height / 2 - 12;
         for (EmiStack icon : icons) {
@@ -79,9 +79,5 @@ public class QuickListScreen extends Screen {
             buttonY += 24;
             icon.render(context, width / 2 - 124, buttonY + 4, delta);
         }
-        for (Button button : buttons) {
-            button.render(context, mouseX, mouseY, delta);
-        }
     }
 }
-

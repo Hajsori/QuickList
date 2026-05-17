@@ -22,8 +22,8 @@ public class ToDoIngredient {
     public long getAmount() {
         return amount;
     }
-    public long addAmount(long amount) {
-        return this.amount += amount;
+    public void addAmount(long amount) {
+        this.amount += amount;
     }
 
     public int getCraftAmount() {
